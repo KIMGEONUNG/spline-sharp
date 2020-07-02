@@ -5,15 +5,14 @@ using System.Text;
 
 namespace Spline
 {
-    /// <summary>
-    /// Implementation for B-spline
-    /// </summary>
-    public class BSpline
+    public class NURBSCurve
     {
         private Point3d[] points;
         private KnotSet knotVector;
+        private double[] weights;
         private int degree;
-        public BSpline(IEnumerable<IEnumerable<double>> pts, KnotSet knots, int degree)
+
+        public NURBSCurve(IEnumerable<IEnumerable<double>> pts, KnotSet knotset, IEnumerable<double> weights, int degree)
         {
             var pointList = new List<Point3d>();
 
@@ -24,7 +23,8 @@ namespace Spline
             }
 
             this.points = pointList.ToArray();
-            this.knotVector = (KnotSet)knots.Clone();
+            this.knotVector = (KnotSet)knotset.Clone();
+            this.weights = weights.ToArray();
             this.degree = degree;
         }
 
@@ -37,16 +37,33 @@ namespace Spline
             for (int i = 0; i <= n; i++)
             {
                 Point3d pt = points[i];
-                double val = GetBasis(i, degree, this.knotVector, t);
+                double val = GetRationalBasis(i, degree, this.knotVector, this.weights, t);
 
                 result = result + val * pt;
             }
             return new double[] { result.X, result.Y, result.Z };
         }
 
-        /// <summary>
-        /// Cox-de Boor recursion formula implementation. 
-        /// </summary>
+        private double GetRationalBasis(int i, int j, KnotSet knots, double[] weight, double t)
+        {
+            int n = points.Length - 1;
+
+            // Calculate denominator
+            double denominator = 0; 
+            for (int k = 0; k <= n; k++)
+            {
+                double val = GetBasis(k,j,knots,t) * weight[k];
+                denominator += val;
+            }
+            
+            // Calculate numerator
+            double numerator = GetBasis(i,j,knots,t) * weight[i];
+
+            double result = numerator / denominator;
+
+            return result;
+        }
+
         private double GetBasis(int i, int j, KnotSet knots, double t)
         {
             double t_i = knots.GetIndexOf(i);
@@ -73,9 +90,6 @@ namespace Spline
             return firstTerm + secondTerm;
         }
 
-        /// <summary>
-        /// Cox-de Boor recursion formula implementation. 
-        /// </summary>
         private double GetCoef(int i, int j, double t, KnotSet knots)
         {
             if (knots.GetIndexOf(i + j) == knots.GetIndexOf(i))

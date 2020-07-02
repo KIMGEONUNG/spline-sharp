@@ -10,10 +10,10 @@ Spline C# Implementation
 
 - Bezier Curve
 - B-Spline
+- Nurbs Curve
 
 ## To be developed
 
-- Nurbs Curve
 - Nurbs Surface
 
 ## Explanation
