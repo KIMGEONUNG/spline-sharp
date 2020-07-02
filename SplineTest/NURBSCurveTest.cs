@@ -27,6 +27,7 @@ namespace SplineTest
                         new double[]{ 6,4,0},
                 };
             knotset = new KnotSet(new double[] { 0, 0, 0, 0, 1, 1, 1, 1 });
+            weights = new double[] { 1, 1, 1, 1 };
             degree = 3;
 
             bSpline = new NURBSCurve(pts, knotset, weights, degree);

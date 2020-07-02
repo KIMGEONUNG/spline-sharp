@@ -10,9 +10,9 @@ namespace Spline
     /// </summary>
     public class BSpline
     {
-        private Point3d[] points;
-        private KnotSet knotVector;
-        private int degree;
+        protected Point3d[] points;
+        protected KnotSet knotVector;
+        protected int degree;
         public BSpline(IEnumerable<IEnumerable<double>> pts, KnotSet knots, int degree)
         {
             var pointList = new List<Point3d>();
@@ -28,7 +28,7 @@ namespace Spline
             this.degree = degree;
         }
 
-        public double[] GetPoint(double t)
+        public virtual double[] GetPoint(double t)
         {
             Point3d result = new Point3d(0, 0, 0);
 
@@ -47,7 +47,7 @@ namespace Spline
         /// <summary>
         /// Cox-de Boor recursion formula implementation. 
         /// </summary>
-        private double GetBasis(int i, int j, KnotSet knots, double t)
+        protected double GetBasis(int i, int j, KnotSet knots, double t)
         {
             double t_i = knots.GetIndexOf(i);
             double t_iplus1 = knots.GetIndexOf(i + 1);
@@ -76,7 +76,7 @@ namespace Spline
         /// <summary>
         /// Cox-de Boor recursion formula implementation. 
         /// </summary>
-        private double GetCoef(int i, int j, double t, KnotSet knots)
+        protected  double GetCoef(int i, int j, double t, KnotSet knots)
         {
             if (knots.GetIndexOf(i + j) == knots.GetIndexOf(i))
             {
@@ -86,7 +86,7 @@ namespace Spline
             return (double)(t - knots.GetIndexOf(i)) / (double)(knots.GetIndexOf(i + j) - knots.GetIndexOf(i));
         }
 
-        private struct Point3d
+        protected struct Point3d
         {
             public double X { get; }
             public double Y { get; }
