@@ -1,4 +1,5 @@
-﻿using Spline.Utils;
+﻿using Spline.Interfaces;
+using Spline.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Spline
     /// <summary>
     /// Implementation for B-spline
     /// </summary>
-    public class BSpline : SplineBase
+    public class BSpline : SplineBase, ParametricCurve
     {
         protected Point3d[] points;
         protected KnotSet knotVector;
@@ -29,7 +30,7 @@ namespace Spline
             this.degree = degree;
         }
 
-        public virtual double[] GetPoint(double t)
+        public virtual double[] ParameterAt(double t)
         {
             Point3d result = new Point3d(0, 0, 0);
 

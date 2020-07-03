@@ -1,4 +1,5 @@
-﻿using Spline.Utils;
+﻿using Spline.Interfaces;
+using Spline.Utils;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -10,21 +11,8 @@ namespace Spline
 {
     /// <summary>
     /// Bezier curve implementation
-    ///
-    /// U count and V count is sometimes confused. so check the below example
-    /// 
-    ///   *--*--*
-    ///   |   |   |
-    ///   *--*--*
-    ///   |   |   |
-    ///   *--*--*
-    ///   |   |   |
-    ///   *--*--*
-    ///
-    /// Let's "*" be the point. In the example, U Count is 4, and V count is 3.
-    /// There is one good tip. The V count is equal to the number of virtical lines.
     /// </summary>
-    public class BezierSurface : SplineBase 
+    public class BezierSurface : SplineBase, ParametricSurface 
     {
         /// <summary>
         /// point3d[u][v]
@@ -66,7 +54,7 @@ namespace Spline
             this.pointsGrid = ptss.Select(n => n.ToArray()).ToArray();
         }
 
-        public double[] GetPoint(double u, double v)
+        public double[] ParameterAt(double u, double v)
         {
             // u
             int n = GetUCount() - 1;

@@ -35,7 +35,7 @@ namespace SplineTest
         }
 
         [TestMethod]
-        public void GetPoint()
+        public void ParameterAt()
         {
             double[][] pts = null;
             double[] weights = null;
@@ -58,7 +58,7 @@ namespace SplineTest
             nurbs = new NURBSCurve(pts, knotset, weights, degree);
             t = 0.5;
             a = new double[] { 2, 3, 0 };
-            r = nurbs.GetPoint(t);
+            r = nurbs.ParameterAt(t);
 
             Assert.IsTrue(a.SequenceEqual(r));
 
@@ -79,7 +79,7 @@ namespace SplineTest
             nurbs = new NURBSCurve(pts, knotset, weights, degree);
             t = 0.3;
             a = new double[] {5.52901, 3.849042, 0.0} ;
-            r = nurbs.GetPoint(t);
+            r = nurbs.ParameterAt(t);
 
             double e = 0.0001;
             Assert.IsTrue(Math.Abs(a[0] - r[0]) < e);

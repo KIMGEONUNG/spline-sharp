@@ -86,7 +86,7 @@ new double[] { 2.0, 3.0, 0.0} ,
         }
 
         [TestMethod]
-        public void GetPoints()
+        public void ParameterAt()
         {
             double[][][] ptGrid = null;
             double[] r, a;
@@ -122,7 +122,7 @@ new double[] { 2.0, 3.0, 0.0} ,
             v = 0.4;
             e = 0.0001;
             surface = new BezierSurface(ptGrid);
-            r = surface.GetPoint(u, v);
+            r = surface.ParameterAt(u, v);
             a = new double[] { 0.6, 1.2, 1.086 };
 
             Assert.IsTrue(r.SequenceEqual(a, e));
@@ -156,7 +156,7 @@ new double[] { 2.0, 3.0, 0.0} ,
             v = 0.9;
             e = 0.0001;
             surface = new BezierSurface(ptGrid);
-            r = surface.GetPoint(u, v);
+            r = surface.ParameterAt(u, v);
             a = new double[] { 1.6, 2.7, 0.713 };
 
             Assert.IsTrue(r.SequenceEqual(a, e));
@@ -190,7 +190,7 @@ new double[] { 2.0, 3.0, 0.0} ,
             v = 0.2;
             e = 0.0001;
             surface = new BezierSurface(ptGrid);
-            r = surface.GetPoint(u, v);
+            r = surface.ParameterAt(u, v);
             a = new double[] { 0.2, 0.6, 0.9272 };
 
             Assert.IsTrue(r.SequenceEqual(a, e));

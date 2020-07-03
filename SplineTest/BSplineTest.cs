@@ -34,7 +34,7 @@ namespace SplineTest
         }
 
         [TestMethod]
-        public void GetPoint()
+        public void ParameterAt()
         {
             double[][] pts = null;
             KnotSet knotset = null;
@@ -55,7 +55,7 @@ namespace SplineTest
             bSpline = new BSpline(pts, knotset, degree);
             t = 0.5;
             a = new double[] { 3, 2, 0 };
-            r = bSpline.GetPoint(t);
+            r = bSpline.ParameterAt(t);
 
             Assert.IsTrue(a.SequenceEqual(r));
         }

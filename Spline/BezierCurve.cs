@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Spline.Enums;
+using Spline.Interfaces;
 using Spline.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Spline
     /// <summary>
     /// Bezier curve implementation
     /// </summary>
-    public class BezierCurve : SplineBase
+    public class BezierCurve : SplineBase, ParametricCurve
     {
         private BezierAlgorithms algorithm;
         private Point3d[] points;
@@ -40,7 +41,7 @@ namespace Spline
             return GetDegree() + 1;
         }
 
-        public double[] GetPoint(double t)
+        public double[] ParameterAt(double t)
         {
             Point3d pt = new Point3d();
 

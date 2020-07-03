@@ -15,7 +15,7 @@ namespace Spline
            this.weights = weights.ToArray();
         }
 
-        public override double[] GetPoint(double t)
+        public override double[] ParameterAt(double t)
         {
             Point3d result = new Point3d(0, 0, 0);
 
