@@ -8,7 +8,7 @@ namespace Spline
     /// <summary>
     /// Implementation for B-spline
     /// </summary>
-    public class BSpline
+    public class BSpline : SplineBase
     {
         protected Point3d[] points;
         protected KnotSet knotVector;
@@ -86,48 +86,5 @@ namespace Spline
             return (double)(t - knots.GetIndexOf(i)) / (double)(knots.GetIndexOf(i + j) - knots.GetIndexOf(i));
         }
 
-        protected struct Point3d
-        {
-            public double X { get; }
-            public double Y { get; }
-            public double Z { get; }
-
-            public Point3d(double x, double y, double z)
-            {
-                this.X = x;
-                this.Y = y;
-                this.Z = z;
-            }
-
-            public Point3d(double[] xyz)
-            {
-                this.X = xyz[0];
-                this.Y = xyz[1];
-                this.Z = xyz[2];
-            }
-
-            public static Point3d operator *(Point3d pt, double val)
-            {
-
-                return new Point3d(pt.X * val, pt.Y * val, pt.Z * val);
-            }
-
-            public static Point3d operator *(double val, Point3d pt)
-            {
-
-                return new Point3d(pt.X * val, pt.Y * val, pt.Z * val);
-            }
-
-            public static Point3d operator +(Point3d pt1, Point3d pt2)
-            {
-
-                return new Point3d(pt1.X + pt2.X, pt1.Y + pt2.Y, pt1.Z + pt2.Z);
-            }
-
-            public override string ToString()
-            {
-                return $"X:{X}, Y:{Y}, Z:{Z}";
-            }
-        }
     }
 }

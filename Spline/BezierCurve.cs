@@ -10,7 +10,7 @@ namespace Spline
     /// <summary>
     /// Bezier curve implementation
     /// </summary>
-    public class BezierCurve
+    public class BezierCurve : SplineBase
     {
         private BezierAlgorithms algorithm;
         private Point3d[] points;
@@ -58,7 +58,7 @@ namespace Spline
             return new double[] { pt.X, pt.Y, pt.Z };
         }
 
-        private int GetFactorial(int i)
+        protected int GetFactorial(int i)
         {
             int result = 1;
             for (int k = 1; k <= i; k++)
@@ -69,14 +69,14 @@ namespace Spline
             return result;
         }
 
-        private int GetBernsteinPolynomial(int n, int i)
+        protected int GetBernsteinPolynomial(int n, int i)
         {
             int val = GetFactorial(n) / (GetFactorial(i) * GetFactorial(n - i));
 
             return val;
         }
 
-        private Func<double, double> GetBernsteinPolynomialBasis(int n, int i)
+        protected Func<double, double> GetBernsteinPolynomialBasis(int n, int i)
         {
             Func<double, double> func = (t) => GetBernsteinPolynomial(n, i) * Math.Pow(t, i) * Math.Pow(1 - t, n - i);
 
@@ -124,50 +124,6 @@ namespace Spline
         private Point3d BasicBezier(Point3d pt0, Point3d pt1, Point3d pt2, double t)
         {
             return (1 - t) * (1 - t) * pt0 + 2 * (1 - t) * t * pt1 + t * t * pt2;
-        }
-
-        private struct Point3d
-        {
-            public double X { get; }
-            public double Y { get; }
-            public double Z { get; }
-
-            public Point3d(double x, double y, double z)
-            {
-                this.X = x;
-                this.Y = y;
-                this.Z = z;
-            }
-
-            public Point3d(double[] xyz)
-            {
-                this.X = xyz[0];
-                this.Y = xyz[1];
-                this.Z = xyz[2];
-            }
-
-            public static Point3d operator *(Point3d pt, double val)
-            {
-
-                return new Point3d(pt.X * val, pt.Y * val, pt.Z * val);
-            }
-
-            public static Point3d operator *(double val, Point3d pt)
-            {
-
-                return new Point3d(pt.X * val, pt.Y * val, pt.Z * val);
-            }
-
-            public static Point3d operator +(Point3d pt1, Point3d pt2)
-            {
-
-                return new Point3d(pt1.X + pt2.X, pt1.Y + pt2.Y, pt1.Z + pt2.Z);
-            }
-
-            public override string ToString()
-            {
-                return $"X:{X}, Y:{Y}, Z:{Z}";
-            }
         }
     }
 }

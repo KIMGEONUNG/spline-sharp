@@ -1,86 +1,127 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 
 namespace Spline
 {
     /// <summary>
     /// Bezier curve implementation
+    ///
+    /// U count and V count is sometimes confused. so check the below example
+    /// 
+    ///   *--*--*
+    ///   |   |   |
+    ///   *--*--*
+    ///   |   |   |
+    ///   *--*--*
+    ///   |   |   |
+    ///   *--*--*
+    ///
+    /// Let's "*" be the point. In the example, U Count is 4, and V count is 3.
+    /// There is one good tip. The V count is equal to the number of virtical lines.
     /// </summary>
-    public class BezierSurface 
+    public class BezierSurface : SplineBase 
     {
-        public BezierSurface(BezierCurve crv1, BezierCurve crv2)
+        /// <summary>
+        /// point3d[u][v]
+        /// </summary>
+        private Point3d[][] pointsGrid;
+
+        /// <summary>
+        /// The points index example is as following.
+        /// The reason for this setting is to look at the coordinate like points[x][y].
+        /// As a result, The number of U count is 3 and that of V count is 5.
+        ///
+        ///  3*---7*--11*
+        ///    |      |    |
+        ///  2*---6*--10*
+        ///    |      |    |
+        ///  1*---5*---9*
+        ///    |      |    |
+        ///  0*---4*---8*
+        ///
+        /// </summary>
+        /// <param name="_pointsGrid"></param>
+        public BezierSurface(IEnumerable<IEnumerable<IEnumerable<double>>> _pointsGrid)
         {
+            List<List<Point3d>> ptss = new List<List<Point3d>>();
+
+            for (int i = 0; i < _pointsGrid.Count(); i++)
+            {
+                ptss.Add(new List<Point3d>());
+                var pts = _pointsGrid.ElementAt(i);
+
+                for (int j = 0; j < pts.Count(); j++)
+                {
+                    IEnumerable<double> pt = pts.ElementAt(j);
+
+                    Point3d target = new Point3d(pt);
+                    ptss.Last().Add(target);
+                }
+            }
+            this.pointsGrid = ptss.Select(n => n.ToArray()).ToArray();
         }
 
-        private Point3d GetTraject(Point3d[] pts, double t)
+        public double[] GetPoint(double u, double v)
         {
-            int len = pts.Length;
+            // u
+            int n = GetUCount() - 1;
+            // v
+            int m = GetVCount() -1;
 
-            if (len < 3)
+            Point3d accumulation = new Point3d(0, 0, 0);
+
+            for (int i = 0; i <= n; i++)
             {
-                throw new Exception();
+                for (int j = 0; j <= m; j++)
+                {
+                    Func<double, double> basis1 = GetBernsteinPolynomialBasis(n, i);
+                    Func<double, double> basis2 = GetBernsteinPolynomialBasis(m, j);
+                    Point3d pt = this.pointsGrid[i][j];
+
+                    accumulation += pt * basis1(u) * basis2(v);
+                }
             }
 
-            if (len == 3)
-            {
-                return BasicBezier(pts[0], pts[1], pts[2], t);
-            }
-
-            var prior = pts.ToList().GetRange(0, len - 1).ToArray();
-            var post = pts.ToList().GetRange(1, len - 1).ToArray();
-
-            return (1 - t) * GetTraject(prior, t) + t * GetTraject(post, t);
+            return new double[] { accumulation.X, accumulation.Y, accumulation.Z };
         }
 
-        private Point3d BasicBezier(Point3d pt0, Point3d pt1, Point3d pt2, double t)
+        public int GetUCount()
         {
-            return (1 - t) * (1 - t) * pt0 + 2 * (1 - t) * t * pt1 + t * t * pt2;
+            return pointsGrid.Length;
         }
 
-        private struct Point3d
+        public int GetVCount()
         {
-            public double X { get; }
-            public double Y { get; }
-            public double Z { get; }
+            return pointsGrid[0].Length;
+        }
 
-            public Point3d(double x, double y, double z)
+        protected int GetFactorial(int i)
+        {
+            int result = 1;
+            for (int k = 1; k <= i; k++)
             {
-                this.X = x;
-                this.Y = y;
-                this.Z = z;
+                result *= k;
             }
 
-            public Point3d(double[] xyz)
-            {
-                this.X = xyz[0];
-                this.Y = xyz[1];
-                this.Z = xyz[2];
-            }
+            return result;
+        }
 
-            public static Point3d operator *(Point3d pt, double val)
-            {
+        protected int GetBernsteinPolynomial(int n, int i)
+        {
+            int val = GetFactorial(n) / (GetFactorial(i) * GetFactorial(n - i));
 
-                return new Point3d(pt.X * val, pt.Y * val, pt.Z * val);
-            }
+            return val;
+        }
 
-            public static Point3d operator *(double val, Point3d pt)
-            {
+        protected Func<double, double> GetBernsteinPolynomialBasis(int n, int i)
+        {
+            Func<double, double> func = (t) => GetBernsteinPolynomial(n, i) * Math.Pow(t, i) * Math.Pow(1 - t, n - i);
 
-                return new Point3d(pt.X * val, pt.Y * val, pt.Z * val);
-            }
-
-            public static Point3d operator +(Point3d pt1, Point3d pt2)
-            {
-
-                return new Point3d(pt1.X + pt2.X, pt1.Y + pt2.Y, pt1.Z + pt2.Z);
-            }
-
-            public override string ToString()
-            {
-                return $"X:{X}, Y:{Y}, Z:{Z}";
-            }
+            return func;
         }
     }
 }
