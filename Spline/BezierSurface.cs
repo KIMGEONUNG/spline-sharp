@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spline.Utils;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -78,8 +79,8 @@ namespace Spline
             {
                 for (int j = 0; j <= m; j++)
                 {
-                    Func<double, double> basis1 = GetBernsteinPolynomialBasis(n, i);
-                    Func<double, double> basis2 = GetBernsteinPolynomialBasis(m, j);
+                    Func<double, double> basis1 = MathTool.GetBernsteinPolynomialBasis(n, i);
+                    Func<double, double> basis2 = MathTool.GetBernsteinPolynomialBasis(m, j);
                     Point3d pt = this.pointsGrid[i][j];
 
                     accumulation += pt * basis1(u) * basis2(v);
@@ -99,29 +100,5 @@ namespace Spline
             return pointsGrid[0].Length;
         }
 
-        protected int GetFactorial(int i)
-        {
-            int result = 1;
-            for (int k = 1; k <= i; k++)
-            {
-                result *= k;
-            }
-
-            return result;
-        }
-
-        protected int GetBernsteinPolynomial(int n, int i)
-        {
-            int val = GetFactorial(n) / (GetFactorial(i) * GetFactorial(n - i));
-
-            return val;
-        }
-
-        protected Func<double, double> GetBernsteinPolynomialBasis(int n, int i)
-        {
-            Func<double, double> func = (t) => GetBernsteinPolynomial(n, i) * Math.Pow(t, i) * Math.Pow(1 - t, n - i);
-
-            return func;
-        }
     }
 }

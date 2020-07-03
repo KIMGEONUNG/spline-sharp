@@ -1,7 +1,7 @@
-using Spline;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using Spline.Utils;
 
 namespace SplineTest
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Spline
+namespace Spline.Utils
 {
     public class KnotSet : ICloneable
     {
@@ -36,7 +36,7 @@ namespace Spline
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                return this.knotVector.First();
+                return knotVector.First();
             }
             else if (knotVector.Length <= i)
             {
@@ -44,9 +44,9 @@ namespace Spline
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                return this.knotVector.Last();
+                return knotVector.Last();
             }
-            return this.knotVector[i];
+            return knotVector[i];
         }
 
         /// <summary>
@@ -69,13 +69,13 @@ namespace Spline
 
         public double[] GetKnotArray()
         {
-            return this.knotVector.ToArray();
+            return knotVector.ToArray();
         }
 
         public object Clone()
         {
-            KnotSet clone = (KnotSet)this.MemberwiseClone();
-            clone.knotVector = this.knotVector.ToArray();
+            KnotSet clone = (KnotSet)MemberwiseClone();
+            clone.knotVector = knotVector.ToArray();
 
             return clone;
         }
@@ -101,7 +101,7 @@ namespace Spline
                 {
                     knots.Add(0);
                 }
-                else if (order <= i && i <= knotCount - order  )
+                else if (order <= i && i <= knotCount - order)
                 {
                     knots.Add(knots.Last() + 1);
                 }

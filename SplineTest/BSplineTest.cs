@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Linq;
+using Spline.Utils;
 
 namespace SplineTest
 {

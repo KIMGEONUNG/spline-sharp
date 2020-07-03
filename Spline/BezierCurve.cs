@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Spline.Enums;
+using Spline.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,31 +59,6 @@ namespace Spline
             return new double[] { pt.X, pt.Y, pt.Z };
         }
 
-        protected int GetFactorial(int i)
-        {
-            int result = 1;
-            for (int k = 1; k <= i; k++)
-            {
-                result *= k;
-            }
-
-            return result;
-        }
-
-        protected int GetBernsteinPolynomial(int n, int i)
-        {
-            int val = GetFactorial(n) / (GetFactorial(i) * GetFactorial(n - i));
-
-            return val;
-        }
-
-        protected Func<double, double> GetBernsteinPolynomialBasis(int n, int i)
-        {
-            Func<double, double> func = (t) => GetBernsteinPolynomial(n, i) * Math.Pow(t, i) * Math.Pow(1 - t, n - i);
-
-            return func;
-        }
-
         private Point3d GetPointWithBernstein(Point3d[] pts, double t)
         {
             int len = pts.Length;
@@ -95,7 +71,7 @@ namespace Spline
                 for (int i = 0; i <= n; i++)
                 {
                     Point3d pt = pts[i];
-                    Func<double, double> basis = GetBernsteinPolynomialBasis(n, i);
+                    Func<double, double> basis = MathTool.GetBernsteinPolynomialBasis(n, i);
 
                     target += basis(t) * pt;
                 }
