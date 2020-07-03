@@ -56,7 +56,7 @@ namespace Spline
                 default:
                     throw new InvalidOperationException("Invalid algorithm type for Bezier");
             }
-            
+
             return new double[] { pt.X, pt.Y, pt.Z };
         }
 
@@ -67,17 +67,17 @@ namespace Spline
             {
                 throw new Exception();
             }
-                int n = len -1;
-                Point3d target = new Point3d(0,0,0);
-                for (int i = 0; i <= n; i++)
-                {
-                    Point3d pt = pts[i];
-                    Func<double, double> basis = MathTool.GetBernsteinPolynomialBasis(n, i);
+            int n = len - 1;
+            Point3d target = new Point3d(0, 0, 0);
+            for (int i = 0; i <= n; i++)
+            {
+                Point3d pt = pts[i];
+                Func<double, double> basis = MathTool.GetBernsteinPolynomialBasis(n, i);
 
-                    target += basis(t) * pt;
-                }
+                target += basis(t) * pt;
+            }
 
-                return target;
+            return target;
         }
 
         private Point3d GetPointWithRecursion(Point3d[] pts, double t)
@@ -87,15 +87,15 @@ namespace Spline
             {
                 throw new Exception();
             }
-                if (len == 3)
-                {
-                    return BasicBezier(pts[0], pts[1], pts[2], t);
-                }
+            if (len == 3)
+            {
+                return BasicBezier(pts[0], pts[1], pts[2], t);
+            }
 
-                var prior = pts.ToList().GetRange(0, len - 1).ToArray();
-                var post = pts.ToList().GetRange(1, len - 1).ToArray();
+            var prior = pts.ToList().GetRange(0, len - 1).ToArray();
+            var post = pts.ToList().GetRange(1, len - 1).ToArray();
 
-                return (1 - t) * GetPointWithRecursion(prior, t) + t * GetPointWithRecursion(post, t);
+            return (1 - t) * GetPointWithRecursion(prior, t) + t * GetPointWithRecursion(post, t);
         }
 
         private Point3d BasicBezier(Point3d pt0, Point3d pt1, Point3d pt2, double t)

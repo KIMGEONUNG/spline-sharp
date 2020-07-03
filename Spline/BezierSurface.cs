@@ -12,7 +12,7 @@ namespace Spline
     /// <summary>
     /// Bezier curve implementation
     /// </summary>
-    public class BezierSurface : SplineBase, ParametricSurface 
+    public class BezierSurface : SplineBase, ParametricSurface
     {
         /// <summary>
         /// point3d[u][v]
@@ -59,7 +59,7 @@ namespace Spline
             // u
             int n = GetUCount() - 1;
             // v
-            int m = GetVCount() -1;
+            int m = GetVCount() - 1;
 
             Point3d accumulation = new Point3d(0, 0, 0);
 
