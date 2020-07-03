@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using Spline.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +12,10 @@ namespace Spline
     /// </summary>
     public class BezierCurve
     {
+        private BezierAlgorithms algorithm;
         private Point3d[] points;
 
-        public BezierCurve(IEnumerable<IEnumerable<double>> pts)
+        public BezierCurve(IEnumerable<IEnumerable<double>> pts, BezierAlgorithms _algorithm = BezierAlgorithms.BerteinPolynomial)
         {
             var pointList = new List<Point3d>();
 
@@ -23,6 +26,7 @@ namespace Spline
             }
 
             this.points = pointList.ToArray();
+            this.algorithm = _algorithm;
         }
 
         public int GetDegree()
@@ -37,29 +41,84 @@ namespace Spline
 
         public double[] GetPoint(double t)
         {
-            Point3d pt = GetTraject(this.points, t);
+            Point3d pt = new Point3d();
+
+            switch (this.algorithm)
+            {
+                case BezierAlgorithms.BerteinPolynomial:
+                    pt = GetPointWithBernstein(this.points, t);
+                    break;
+                case BezierAlgorithms.Recursion:
+                    pt = GetPointWithRecursion(this.points, t);
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid algorithm type for Bezier");
+            }
             
             return new double[] { pt.X, pt.Y, pt.Z };
         }
 
-        private Point3d GetTraject(Point3d[] pts, double t)
+        private int GetFactorial(int i)
+        {
+            int result = 1;
+            for (int k = 1; k <= i; k++)
+            {
+                result *= k;
+            }
+
+            return result;
+        }
+
+        private int GetBernsteinPolynomial(int n, int i)
+        {
+            int val = GetFactorial(n) / (GetFactorial(i) * GetFactorial(n - i));
+
+            return val;
+        }
+
+        private Func<double, double> GetBernsteinPolynomialBasis(int n, int i)
+        {
+            Func<double, double> func = (t) => GetBernsteinPolynomial(n, i) * Math.Pow(t, i) * Math.Pow(1 - t, n - i);
+
+            return func;
+        }
+
+        private Point3d GetPointWithBernstein(Point3d[] pts, double t)
         {
             int len = pts.Length;
-
             if (len < 3)
             {
                 throw new Exception();
             }
+                int n = len -1;
+                Point3d target = new Point3d(0,0,0);
+                for (int i = 0; i <= n; i++)
+                {
+                    Point3d pt = pts[i];
+                    Func<double, double> basis = GetBernsteinPolynomialBasis(n, i);
 
-            if (len == 3)
+                    target += basis(t) * pt;
+                }
+
+                return target;
+        }
+
+        private Point3d GetPointWithRecursion(Point3d[] pts, double t)
+        {
+            int len = pts.Length;
+            if (len < 3)
             {
-                return BasicBezier(pts[0], pts[1], pts[2], t);
+                throw new Exception();
             }
+                if (len == 3)
+                {
+                    return BasicBezier(pts[0], pts[1], pts[2], t);
+                }
 
-            var prior = pts.ToList().GetRange(0, len - 1).ToArray();
-            var post = pts.ToList().GetRange(1, len - 1).ToArray();
+                var prior = pts.ToList().GetRange(0, len - 1).ToArray();
+                var post = pts.ToList().GetRange(1, len - 1).ToArray();
 
-            return (1 - t) * GetTraject(prior, t) + t * GetTraject(post, t);
+                return (1 - t) * GetPointWithRecursion(prior, t) + t * GetPointWithRecursion(post, t);
         }
 
         private Point3d BasicBezier(Point3d pt0, Point3d pt1, Point3d pt2, double t)

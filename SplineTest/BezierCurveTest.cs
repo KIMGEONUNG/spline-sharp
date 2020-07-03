@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Spline.Enums;
 
 namespace SplineTest
 {
@@ -32,6 +33,7 @@ namespace SplineTest
             BezierCurve bezier = null;
             double t;
             double[] r, a;
+            double e;
 
             pts = new double[][]
                 {
@@ -39,12 +41,58 @@ namespace SplineTest
                     new double[]{ 3,4,0},
                     new double[]{ 6,0,0},
                 };
-            bezier = new BezierCurve(pts);
+            bezier = new BezierCurve(pts, BezierAlgorithms.Recursion);
             t = 0.5;
             a = new double[] { 3, 2, 0 };
             r = bezier.GetPoint(t);
 
             Assert.IsTrue(r.SequenceEqual(a));
+
+            
+            pts = new double[][]
+                {
+                    new double[]{ 0,0,0},
+                    new double[]{ 3,4,0},
+                    new double[]{ 6,0,0},
+                };
+            bezier = new BezierCurve(pts, BezierAlgorithms.BerteinPolynomial);
+            t = 0.5;
+            a = new double[] { 3, 2, 0 };
+            r = bezier.GetPoint(t);
+
+            Assert.IsTrue(r.SequenceEqual(a));
+
+
+            pts = new double[][]
+               {
+                    new double[]{ -4,-4,0},
+                    new double[]{ -2,4,0},
+                    new double[]{ 2,-4,0},
+                    new double[]{ 4, 4,0},
+                };
+            bezier = new BezierCurve(pts, BezierAlgorithms.Recursion);
+            t = 0.3;
+            a = new double[] { -1.768, -0.256, 0 };
+            r = bezier.GetPoint(t);
+            e = 0.01;
+
+            Assert.IsTrue(r.SequenceEqual(a,e));
+
+
+            pts = new double[][]
+               {
+                    new double[]{ -4,-4,0},
+                    new double[]{ -2,4,0},
+                    new double[]{ 2,-4,0},
+                    new double[]{ 4, 4,0},
+                };
+            bezier = new BezierCurve(pts, BezierAlgorithms.BerteinPolynomial);
+            t = 0.3;
+            a = new double[] { -1.768, -0.256, 0 };
+            r = bezier.GetPoint(t);
+            e = 0.01;
+
+            Assert.IsTrue(r.SequenceEqual(a,e));
         }
 
         [TestMethod]
