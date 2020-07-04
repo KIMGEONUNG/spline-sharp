@@ -1,4 +1,5 @@
-﻿using Spline.Interfaces;
+﻿using Spline.BasisInfos;
+using Spline.Interfaces;
 using Spline.Utils;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,10 @@ namespace Spline
             for (int i = 0; i <= n; i++)
             {
                 Point3d pt = points[i];
-                double val = GetBasis(i, degree, this.knotVector, t);
+
+                BasisInfo info = new BSplineBasisInfo(i, degree, knotVector);
+                Func<double, double> basis = this.GetBasisFunction(info);
+                double val = basis(t); 
 
                 result = result + val * pt;
             }
