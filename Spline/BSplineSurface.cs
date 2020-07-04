@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Spline
 {
-    public class BSplineSurface : SplineBase, ParametricSurface
+    public class BSplineSurface : BSpline, ParametricSurface
     {
         /// <summary>
         /// point3d[u][v]
@@ -52,5 +52,16 @@ namespace Spline
         {
             throw new NotImplementedException();
         }
+
+        public int GetUCount()
+        {
+            return pointsGrid.Length;
+        }
+
+        public int GetVCount()
+        {
+            return pointsGrid[0].Length;
+        }
+
     }
 }

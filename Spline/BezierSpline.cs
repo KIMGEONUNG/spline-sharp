@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Spline
 {
-    public class BezierSpline : SplineBase
+    public abstract class BezierSpline : SplineBase
     {
         protected override Func<double, double> GetBasisFunction(BasisInfo _info)
         {
