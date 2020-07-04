@@ -10,12 +10,12 @@ namespace Spline
     /// <summary>
     /// Implementation for B-spline
     /// </summary>
-    public class BSpline : SplineBase, ParametricCurve
+    public class BSplineCurve : SplineBase, ParametricCurve
     {
         protected Point3d[] points;
         protected KnotSet knotVector;
         protected int degree;
-        public BSpline(IEnumerable<IEnumerable<double>> pts, KnotSet knots, int degree)
+        public BSplineCurve(IEnumerable<IEnumerable<double>> pts, KnotSet knots, int degree)
         {
             var pointList = new List<Point3d>();
 

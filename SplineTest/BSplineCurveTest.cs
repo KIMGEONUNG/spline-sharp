@@ -11,15 +11,15 @@ using Spline.Utils;
 namespace SplineTest
 {
     [TestClass]
-    public class BSplineTest
+    public class BSplineCurveTest
     {
         [TestMethod]
-        public void BSpline()
+        public void BSplineCurve()
         {
             double[][] pts = null;
             KnotSet knotset = null;
             int degree = int.MinValue;
-            BSpline bSpline = null; 
+            BSplineCurve bSpline = null; 
 
             pts = new double[][]
                 {
@@ -30,7 +30,7 @@ namespace SplineTest
                 };
             knotset = new KnotSet(new double[] { 0, 0, 0, 0, 1, 1, 1, 1 });
             degree = 3;
-            bSpline = new BSpline(pts, knotset, degree);
+            bSpline = new BSplineCurve(pts, knotset, degree);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace SplineTest
             double[][] pts = null;
             KnotSet knotset = null;
             int degree = int.MinValue;
-            BSpline bSpline = null;
+            BSplineCurve bSpline = null;
             double[] r, a;
             double t;
 
@@ -52,7 +52,7 @@ namespace SplineTest
                 };
             knotset = new KnotSet(new double[] { 0, 0, 0, 0, 1, 1, 1, 1 });
             degree = 3;
-            bSpline = new BSpline(pts, knotset, degree);
+            bSpline = new BSplineCurve(pts, knotset, degree);
             t = 0.5;
             a = new double[] { 3, 2, 0 };
             r = bSpline.ParameterAt(t);

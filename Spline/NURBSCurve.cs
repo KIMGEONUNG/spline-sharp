@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Spline
 {
-    public class NURBSCurve : BSpline
+    public class NURBSCurve : BSplineCurve
     {
         private double[] weights;
 
