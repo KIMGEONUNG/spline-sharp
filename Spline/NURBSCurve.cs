@@ -1,18 +1,20 @@
 ﻿using Spline.BasisInfos;
+using Spline.Interfaces;
 using Spline.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace Spline
 {
-    public class NURBSCurve : NURBS
+    public class NURBSCurve : BSpline, ParametricCurve
     {
         protected Point3d[] points;
+        private double[] weights;
         protected KnotSet knotVector;
         protected int degree;
-        private double[] weights;
 
         public NURBSCurve(IEnumerable<IEnumerable<double>> pts, KnotSet knotset, IEnumerable<double> weights, int degree)
         {
@@ -32,21 +34,43 @@ namespace Spline
 
         public double[] ParameterAt(double t)
         {
-            Point3d result = new Point3d(0, 0, 0);
-
             int n = points.Length - 1;
+            Point3d result = new Point3d(0, 0, 0);
 
             for (int i = 0; i <= n; i++)
             {
                 Point3d pt = points[i];
+                double weight = this.weights[i];
 
-                BasisInfo info = new NURBSBasisInfo(i, degree, knotVector, weights);
+                BasisInfo info = new BSplineBasisInfo(i, degree, knotVector);
                 var basis = GetBasisFunction(info);
                 double val = basis(t);
 
-                result = result + val * pt;
+                result += val * pt * weight;
             }
+            double denominator = GetRationalBasisDenominator(t);
+
+            result /= denominator;
+
             return new double[] { result.X, result.Y, result.Z };
+        }
+
+        private double GetRationalBasisDenominator(double t)
+        {
+            int n = weights.Length - 1;
+
+            double denominator = 0;
+            for (int i = 0; i <= n; i++)
+            {
+                BasisInfo info = new BSplineBasisInfo(i, degree, knotVector);
+
+                Func<double, double> basis = GetBasisFunction(info);
+                double weight = this.weights[i];
+
+                denominator += basis(t) * weight;
+            }
+
+            return denominator;
         }
     }
 }

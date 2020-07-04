@@ -49,21 +49,5 @@ namespace SplineTest
             i = -2;
             Assert.ThrowsException<ArgumentException>(() => MathTool.GetBinomialCoefficient(n, i));
         }
-
-        [TestMethod]
-        public void GetBernsteinPolynomialBasis()
-        {
-            int n, i;
-            double t;
-            double value;
-            Func<double,double>a,r;
-
-            n = 3;
-            i = 2;
-            r = MathTool.GetBernsteinPolynomialBasis(n, i);
-            t = 0.5;
-            value = r(t);
-            Assert.IsTrue(value == 0.375);
-        }
     }
 }

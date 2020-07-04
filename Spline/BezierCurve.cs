@@ -57,19 +57,21 @@ namespace Spline
         public double[] ParameterAt(double t)
         {
             int n = points.Length - 1;
-            Point3d target = new Point3d(0, 0, 0);
+            Point3d result = new Point3d(0, 0, 0);
 
             for (int i = 0; i <= n; i++)
             {
                 Point3d pt = points[i];
-                BezierBasisInfo info = new BezierBasisInfo(n, i);
+                BasisInfo info = new BezierBasisInfo(n, i);
                 Func<double, double> basis = this.GetBasisFunction(info);
+                double val = basis(t); 
 
-                target += basis(t) * pt;
+                result += val * pt;
             }
 
-            return new double[] { target.X, target.Y, target.Z };
+            return new double[] { result.X, result.Y, result.Z };
         }
+
         public double[] GetPointWithRecursive(double t)
         {
             Point3d target = GetPointWithRecursion(t);

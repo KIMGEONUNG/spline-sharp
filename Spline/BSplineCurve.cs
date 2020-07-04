@@ -17,7 +17,7 @@ namespace Spline
         protected KnotSet knotVector;
         protected int degree;
 
-        public BSplineCurve(IEnumerable<IEnumerable<double>> pts, KnotSet knots, int degree)
+        public BSplineCurve(IEnumerable<IEnumerable<double>> pts, KnotSet knots, int degree) 
         {
             var pointList = new List<Point3d>();
 
@@ -34,9 +34,8 @@ namespace Spline
 
         public virtual double[] ParameterAt(double t)
         {
-            Point3d result = new Point3d(0, 0, 0);
-
             int n = points.Length - 1;
+            Point3d result = new Point3d(0, 0, 0);
 
             for (int i = 0; i <= n; i++)
             {
@@ -46,10 +45,10 @@ namespace Spline
                 Func<double, double> basis = this.GetBasisFunction(info);
                 double val = basis(t); 
 
-                result = result + val * pt;
+                result += val * pt;
             }
+
             return new double[] { result.X, result.Y, result.Z };
         }
-
     }
 }

@@ -43,6 +43,11 @@ namespace Spline
 
                 return new Point3d(pt.X * val, pt.Y * val, pt.Z * val);
             }
+            public static Point3d operator /(Point3d pt, double val)
+            {
+
+                return new Point3d(pt.X / val, pt.Y / val, pt.Z / val);
+            }
 
             public static Point3d operator +(Point3d pt1, Point3d pt2)
             {

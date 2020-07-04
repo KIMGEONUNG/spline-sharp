@@ -36,13 +36,5 @@ namespace Spline.Utils
 
             return val;
         }
-
-        [Obsolete("To be going to be deprecated")]
-        public static Func<double, double> GetBernsteinPolynomialBasis(int n, int i)
-        {
-            Func<double, double> func = (t) => GetBinomialCoefficient(n, i) * Math.Pow(t, i) * Math.Pow(1 - t, n - i);
-
-            return func;
-        }
     }
 }
