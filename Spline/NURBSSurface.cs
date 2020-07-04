@@ -63,7 +63,6 @@ namespace Spline
             this.weights = wss.Select(n => n.ToArray()).ToArray();
         }
 
-        [Obsolete("Not Tested")]
         public double[] ParameterAt(double u, double v)
         {
             // u

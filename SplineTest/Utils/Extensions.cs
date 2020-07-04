@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SplineTest
+namespace SplineTest.Utils
 {
     public static class Extensions
     {
@@ -21,7 +21,7 @@ namespace SplineTest
                 double a = item.First;
                 double b = item.Second;
 
-                if (Math.Abs(a  - b) > epsilon)
+                if (Math.Abs(a - b) > epsilon)
                 {
                     return false;
                 }
@@ -44,7 +44,7 @@ namespace SplineTest
                 double a = item.First;
                 double b = item.Second;
 
-                if (Math.Abs(a  - b) > epsilon)
+                if (Math.Abs(a - b) > epsilon)
                 {
                     return false;
                 }

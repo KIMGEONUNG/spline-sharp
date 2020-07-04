@@ -54,7 +54,6 @@ namespace Spline
             this.pointsGrid = ptss.Select(n => n.ToArray()).ToArray();
         }
 
-        [Obsolete("Not Tested")]
         public double[] ParameterAt(double u, double v)
         {
             // u

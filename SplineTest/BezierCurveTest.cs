@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Spline.Enums;
+using SplineTest.Utils;
 
 namespace SplineTest
 {
