@@ -41,10 +41,10 @@ namespace SplineTest
                     new double[]{ 3,4,0},
                     new double[]{ 6,0,0},
                 };
-            bezier = new BezierCurve(pts, BezierAlgorithms.Recursion);
+            bezier = new BezierCurve(pts);
             t = 0.5;
             a = new double[] { 3, 2, 0 };
-            r = bezier.ParameterAt(t);
+            r = bezier.GetPointWithRecursive(t);
 
             Assert.IsTrue(r.SequenceEqual(a));
 
@@ -55,7 +55,7 @@ namespace SplineTest
                     new double[]{ 3,4,0},
                     new double[]{ 6,0,0},
                 };
-            bezier = new BezierCurve(pts, BezierAlgorithms.BerteinPolynomial);
+            bezier = new BezierCurve(pts);
             t = 0.5;
             a = new double[] { 3, 2, 0 };
             r = bezier.ParameterAt(t);
@@ -70,10 +70,10 @@ namespace SplineTest
                     new double[]{ 2,-4,0},
                     new double[]{ 4, 4,0},
                 };
-            bezier = new BezierCurve(pts, BezierAlgorithms.Recursion);
+            bezier = new BezierCurve(pts);
             t = 0.3;
             a = new double[] { -1.768, -0.256, 0 };
-            r = bezier.ParameterAt(t);
+            r = bezier.GetPointWithRecursive(t);
             e = 0.01;
 
             Assert.IsTrue(r.SequenceEqual(a,e));
@@ -86,7 +86,7 @@ namespace SplineTest
                     new double[]{ 2,-4,0},
                     new double[]{ 4, 4,0},
                 };
-            bezier = new BezierCurve(pts, BezierAlgorithms.BerteinPolynomial);
+            bezier = new BezierCurve(pts);
             t = 0.3;
             a = new double[] { -1.768, -0.256, 0 };
             r = bezier.ParameterAt(t);

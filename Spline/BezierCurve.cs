@@ -5,6 +5,7 @@ using Spline.Interfaces;
 using Spline.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -16,10 +17,9 @@ namespace Spline
     /// </summary>
     public class BezierCurve : BezierSpline, ParametricCurve
     {
-        private BezierAlgorithms algorithm;
         private Point3d[] points;
 
-        public BezierCurve(IEnumerable<IEnumerable<double>> pts, BezierAlgorithms _algorithm = BezierAlgorithms.BerteinPolynomial)
+        public BezierCurve(IEnumerable<IEnumerable<double>> pts)
         {
             var pointList = new List<Point3d>();
 
@@ -30,7 +30,6 @@ namespace Spline
             }
 
             this.points = pointList.ToArray();
-            this.algorithm = _algorithm;
         }
 
         public int GetDegree()
@@ -57,56 +56,43 @@ namespace Spline
 
         public double[] ParameterAt(double t)
         {
-            Point3d pt = new Point3d();
-
-            switch (this.algorithm)
-            {
-                case BezierAlgorithms.BerteinPolynomial:
-                    pt = GetPointWithBernstein(this.points, t);
-                    break;
-                case BezierAlgorithms.Recursion:
-                    pt = GetPointWithRecursion(this.points, t);
-                    break;
-                default:
-                    throw new InvalidOperationException("Invalid algorithm type for Bezier");
-            }
-
-            return new double[] { pt.X, pt.Y, pt.Z };
-        }
-
-        private Point3d GetPointWithBernstein(Point3d[] pts, double t)
-        {
-            int n = pts.Length - 1;
+            int n = points.Length - 1;
             Point3d target = new Point3d(0, 0, 0);
 
             for (int i = 0; i <= n; i++)
             {
-                Point3d pt = pts[i];
+                Point3d pt = points[i];
                 BezierBasisInfo info = new BezierBasisInfo(n, i);
                 Func<double, double> basis = this.GetBasisFunction(info);
 
                 target += basis(t) * pt;
             }
 
-            return target;
+            return new double[] { target.X, target.Y, target.Z };
+        }
+        public double[] GetPointWithRecursive(double t)
+        {
+            Point3d target = GetPointWithRecursion(t);
+
+            return new double[] { target.X, target.Y, target.Z };
         }
 
-        private Point3d GetPointWithRecursion(Point3d[] pts, double t)
+        private Point3d GetPointWithRecursion(double t)
         {
-            int len = pts.Length;
+            int len = points.Length;
             if (len < 3)
             {
                 throw new Exception();
             }
             if (len == 3)
             {
-                return BasicBezier(pts[0], pts[1], pts[2], t);
+                return BasicBezier(points[0], points[1], points[2], t);
             }
 
-            var prior = pts.ToList().GetRange(0, len - 1).ToArray();
-            var post = pts.ToList().GetRange(1, len - 1).ToArray();
+            var prior = points.ToList().GetRange(0, len - 1).ToArray();
+            var post = points.ToList().GetRange(1, len - 1).ToArray();
 
-            return (1 - t) * GetPointWithRecursion(prior, t) + t * GetPointWithRecursion(post, t);
+            return (1 - t) * GetPointWithRecursion(t) + t * GetPointWithRecursion(t);
         }
 
         private Point3d BasicBezier(Point3d pt0, Point3d pt1, Point3d pt2, double t)
