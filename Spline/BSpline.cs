@@ -54,7 +54,7 @@ namespace Spline
         /// <summary>
         /// Cox-de Boor recursion formula implementation. 
         /// </summary>
-        private Func<double,double> GetBasis(int i, int j, KnotSet knots)
+        protected Func<double,double> GetBasis(int i, int j, KnotSet knots)
         {
             Func<double, double> func = (t) =>
              {
@@ -74,9 +74,6 @@ namespace Spline
                  }
                  double coef1 = GetCoef(i, j, t, knots);
                  double coef2 = 1 - GetCoef(i + 1, j, t, knots);
-
-                 //double firstTerm = coef1 * GetBasis(i, j - 1, knots, t);
-                 //double secondTerm = coef2 * GetBasis(i + 1, j - 1, knots, t);
 
                  var firstTerm =  GetBasis(i, j - 1, knots);
                  var secondTerm = GetBasis(i + 1, j - 1, knots);
