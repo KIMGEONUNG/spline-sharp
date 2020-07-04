@@ -1,4 +1,5 @@
-﻿using Spline.Interfaces;
+﻿using Spline.BasisInfos;
+using Spline.Interfaces;
 using Spline.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Spline
     /// <summary>
     /// Bezier curve implementation
     /// </summary>
-    public class BezierSurface : SplineBase, ParametricSurface
+    public class BezierSurface : BezierSpline, ParametricSurface
     {
         /// <summary>
         /// point3d[u][v]
@@ -67,8 +68,11 @@ namespace Spline
             {
                 for (int j = 0; j <= m; j++)
                 {
-                    Func<double, double> basis1 = MathTool.GetBernsteinPolynomialBasis(n, i);
-                    Func<double, double> basis2 = MathTool.GetBernsteinPolynomialBasis(m, j);
+                    BasisInfo info1 = new BezierBasisInfo(n, i);
+                    BasisInfo info2 = new BezierBasisInfo(m, j);
+
+                    Func<double, double> basis1 = GetBasisFunction(info1);
+                    Func<double, double> basis2 = GetBasisFunction(info2);
                     Point3d pt = this.pointsGrid[i][j];
 
                     accumulation += pt * basis1(u) * basis2(v);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spline.BasisInfos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Spline
 {
     public abstract class SplineBase
     {
-        protected virtual Func<double, double> GetBasisFunction()
+        protected virtual Func<double, double> GetBasisFunction(BasisInfo _info)
         {
             throw new NotImplementedException();
         }

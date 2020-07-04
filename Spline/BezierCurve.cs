@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
+using Spline.BasisInfos;
 using Spline.Enums;
 using Spline.Interfaces;
 using Spline.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace Spline
@@ -12,7 +14,7 @@ namespace Spline
     /// <summary>
     /// Bezier curve implementation
     /// </summary>
-    public class BezierCurve : SplineBase, ParametricCurve
+    public class BezierCurve : BezierSpline, ParametricCurve
     {
         private BezierAlgorithms algorithm;
         private Point3d[] points;
@@ -41,6 +43,18 @@ namespace Spline
             return GetDegree() + 1;
         }
 
+        protected override Func<double, double> GetBasisFunction(BasisInfo _info)
+        {
+            BezierBasisInfo info = (BezierBasisInfo)_info;
+
+            int n = info.N;
+            int i = info.I;
+
+            Func<double, double> func = (t) => MathTool.GetBinomialCoefficient(n, i) * Math.Pow(t, i) * Math.Pow(1 - t, n - i);
+
+            return func;
+        }
+
         public double[] ParameterAt(double t)
         {
             Point3d pt = new Point3d();
@@ -62,17 +76,14 @@ namespace Spline
 
         private Point3d GetPointWithBernstein(Point3d[] pts, double t)
         {
-            int len = pts.Length;
-            if (len < 3)
-            {
-                throw new Exception();
-            }
-            int n = len - 1;
+            int n = pts.Length - 1;
             Point3d target = new Point3d(0, 0, 0);
+
             for (int i = 0; i <= n; i++)
             {
                 Point3d pt = pts[i];
-                Func<double, double> basis = MathTool.GetBernsteinPolynomialBasis(n, i);
+                BezierBasisInfo info = new BezierBasisInfo(n, i);
+                Func<double, double> basis = this.GetBasisFunction(info);
 
                 target += basis(t) * pt;
             }

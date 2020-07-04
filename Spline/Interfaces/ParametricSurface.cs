@@ -7,5 +7,7 @@ namespace Spline.Interfaces
     interface ParametricSurface
     {
         double[] ParameterAt(double u, double v);
+        int GetUCount();
+        int GetVCount();
     }
 }

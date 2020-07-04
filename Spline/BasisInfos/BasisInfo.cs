@@ -4,7 +4,14 @@ using System.Text;
 
 namespace Spline.BasisInfos
 {
-    public abstract class BasisInfo
+    /// <summary>
+    /// BasisInfo empty class
+    /// </summary>
+    public abstract class BasisInfo : ICloneable
     {
+        public virtual object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }
