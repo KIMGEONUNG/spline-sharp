@@ -15,6 +15,7 @@ namespace Spline
         protected Point3d[] points;
         protected KnotSet knotVector;
         protected int degree;
+
         public BSplineCurve(IEnumerable<IEnumerable<double>> pts, KnotSet knots, int degree)
         {
             var pointList = new List<Point3d>();
