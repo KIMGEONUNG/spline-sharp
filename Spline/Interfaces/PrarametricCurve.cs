@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Spline.Interfaces
 {
-    interface ParametricCurve
+    public interface ParametricCurve
     {
         double[] ParameterAt(double t);
     }

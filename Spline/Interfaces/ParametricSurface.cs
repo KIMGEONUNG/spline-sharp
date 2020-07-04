@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Spline.Interfaces
 {
-    interface ParametricSurface
+    public interface ParametricSurface
     {
         double[] ParameterAt(double u, double v);
         int GetUCount();
