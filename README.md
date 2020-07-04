@@ -1,4 +1,4 @@
-# Spline
+# SplineSharp
 Spline C# Implementation
 
 ## Environment & Dependency
@@ -11,12 +11,14 @@ Spline C# Implementation
 - Bezier Curve 
 - Bezier Surface 
 - B-Spline
+- B-Spline Surface ( Not tested )
 - Nurbs Curve
+- Nurbs Surface ( Not tested )
+
 
 ## To be developed
 
-- B-Spline Surface
-- Nurbs Surface
+- T-Spline
 
 ## Explanation
 
