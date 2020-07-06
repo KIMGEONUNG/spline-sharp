@@ -125,5 +125,20 @@ namespace SplineTest
 
             Assert.IsTrue(r.SequenceEqual(a));
         }
+
+        [TestMethod]
+        public void GetMaxKnot()
+        {
+            KnotSet knots;
+            double[] vec;
+            double r, a;
+
+            vec = new double[] { 0, 1, 2, 3, 4 };
+            knots = new KnotSet(vec);
+            r = knots.GetMaxKnot();
+            a = 4;
+
+            Assert.IsTrue(r == a);
+        }
     }
 }

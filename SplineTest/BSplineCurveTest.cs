@@ -20,7 +20,7 @@ namespace SplineTest
             double[][] pts = null;
             KnotSet knotset = null;
             int degree = int.MinValue;
-            BSplineCurve bSpline = null; 
+            BSplineCurve bSpline = null;
 
             pts = new double[][]
                 {
@@ -77,7 +77,7 @@ namespace SplineTest
             r = bSpline.ParameterAt(t);
             e = 0.0001;
 
-            Assert.IsTrue(a.SequenceEqual(r,e));
+            Assert.IsTrue(a.SequenceEqual(r, e));
 
 
             pts = new double[][]
@@ -95,7 +95,7 @@ namespace SplineTest
             r = bSpline.ParameterAt(t);
             e = 0.0001;
 
-            Assert.IsTrue(a.SequenceEqual(r,e));
+            Assert.IsTrue(a.SequenceEqual(r, e));
 
 
             pts = new double[][]
@@ -113,7 +113,24 @@ namespace SplineTest
             r = bSpline.ParameterAt(t);
             e = 0.0001;
 
-            Assert.IsTrue(a.SequenceEqual(r,e));
+            Assert.IsTrue(a.SequenceEqual(r, e));
+
+
+            pts = new double[][]
+                {
+                    new double[]{ 1,0,0},
+                    new double[]{ 2,4,0},
+                    new double[]{ 6,4,0},
+                };
+            knotset = new KnotSet(new double[] { 0, 0, 0, 1, 1, 1 });
+            degree = 2;
+            bSpline = new BSplineCurve(pts, knotset, degree);
+            t = 0;
+            a = new double[] { 1, 0, 0 };
+            r = bSpline.ParameterAt(t);
+            e = 0.0001;
+
+            Assert.IsTrue(a.SequenceEqual(r, e));
 
 
             pts = new double[][]
@@ -130,7 +147,7 @@ namespace SplineTest
             r = bSpline.ParameterAt(t);
             e = 0.0001;
 
-            Assert.IsTrue(a.SequenceEqual(r,e));
+            Assert.IsTrue(a.SequenceEqual(r, e));
         }
     }
 }

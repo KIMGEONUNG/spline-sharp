@@ -37,20 +37,32 @@ namespace Spline
             int n = points.Length - 1;
             Point3d result = new Point3d(0, 0, 0);
 
-            for (int i = 0; i <= n; i++)
+            if (t == this.knotVector.GetMaxKnot())
             {
-                Point3d pt = points[i];
-                double weight = this.weights[i];
-
-                BasisInfo info = new BSplineBasisInfo(i, degree, knotVector);
-                var basis = GetBasisFunction(info);
-                double val = basis(t);
-
-                result += val * pt * weight;
+                result = points.Last();
             }
-            double denominator = GetRationalBasisDenominator(t);
+            else
+            {
+                for (int i = 0; i <= n; i++)
+                {
+                    Point3d pt = points[i];
+                    double weight = this.weights[i];
 
-            result /= denominator;
+                    BasisInfo info = new BSplineBasisInfo(i, degree, knotVector);
+                    var basis = GetBasisFunction(info);
+                    double val = basis(t);
+
+                    result += val * pt * weight;
+                }
+                double denominator = GetRationalBasisDenominator(t);
+
+                if (denominator == 0)
+                {
+                    throw new DivideByZeroException();
+                }
+
+                result /= denominator;
+            }
 
             return new double[] { result.X, result.Y, result.Z };
         }

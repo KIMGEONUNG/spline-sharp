@@ -94,6 +94,11 @@ namespace Spline
             }
             double denominator = GetRationalBasisDenominator(u, v);
 
+            if (denominator == 0)
+            {
+                throw new DivideByZeroException();
+            }
+
             accumulation /= denominator;
 
             return new double[] { accumulation.X, accumulation.Y, accumulation.Z };

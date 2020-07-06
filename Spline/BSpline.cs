@@ -46,10 +46,13 @@ namespace Spline
                  double coef1 = GetCoef(i, j, t, knots);
                  double coef2 = 1 - GetCoef(i + 1, j, t, knots);
 
-                 var firstTerm =  GetBasis(i, j - 1, knots);
-                 var secondTerm = GetBasis(i + 1, j - 1, knots);
+                 Func<double, double> firstTerm =  GetBasis(i, j - 1, knots);
+                 Func<double, double> secondTerm = GetBasis(i + 1, j - 1, knots);
 
-                 return coef1 * firstTerm(t) + coef2 * secondTerm(t);
+                 double first = firstTerm(t);
+                 double second = secondTerm(t);
+
+                 return coef1 * first + coef2 * second;
              };
 
            return func;

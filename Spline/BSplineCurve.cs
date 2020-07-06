@@ -3,6 +3,7 @@ using Spline.Interfaces;
 using Spline.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -37,15 +38,24 @@ namespace Spline
             int n = points.Length - 1;
             Point3d result = new Point3d(0, 0, 0);
 
-            for (int i = 0; i <= n; i++)
+            // Boundary condition
+            if (t == this.knotVector.GetMaxKnot())
             {
-                Point3d pt = points[i];
+                result = points.Last();
+            }
+            else
+            {
+                for (int i = 0; i <= n; i++)
+                {
+                    Point3d pt = points[i];
 
-                BasisInfo info = new BSplineBasisInfo(i, degree, knotVector);
-                Func<double, double> basis = this.GetBasisFunction(info);
-                double val = basis(t); 
+                    BasisInfo info = new BSplineBasisInfo(i, degree, knotVector);
+                    Func<double, double> basis = this.GetBasisFunction(info);
+                    double val = basis(t);
 
-                result += val * pt;
+
+                    result += val * pt;
+                }
             }
 
             return new double[] { result.X, result.Y, result.Z };

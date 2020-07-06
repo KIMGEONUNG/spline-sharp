@@ -72,6 +72,11 @@ namespace Spline.Utils
             return knotVector.ToArray();
         }
 
+        public double GetMaxKnot()
+        {
+            return this.knotVector.Max();
+        }
+
         public object Clone()
         {
             KnotSet clone = (KnotSet)MemberwiseClone();
