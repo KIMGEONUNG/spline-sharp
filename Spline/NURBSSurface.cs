@@ -79,13 +79,26 @@ namespace Spline
 
             for (int i = 0; i <= n; i++)
             {
+                BasisInfo info1 = new BSplineBasisInfo(i, uDegree, uKnotVector);
+                Func<double, double> basis1 = GetBasisFunction(info1);
+
+                // Boundary condition
+                if (u == 1 && i == n)
+                {
+                    basis1 = (t) => 1;
+                }
+
                 for (int j = 0; j <= m; j++)
                 {
-                    BasisInfo info1 = new BSplineBasisInfo(i, uDegree, uKnotVector);
                     BasisInfo info2 = new BSplineBasisInfo(j, vDegree, vKnotVector);
-
-                    Func<double, double> basis1 = GetBasisFunction(info1);
                     Func<double, double> basis2 = GetBasisFunction(info2);
+                    
+                    // Boundary condition
+                    if (v == 1 && j == m)
+                    {
+                        basis2 = (t) => 1;
+                    }
+
                     Point3d pt = this.pointsGrid[i][j];
                     double weight = this.weights[i][j];
 
@@ -96,7 +109,8 @@ namespace Spline
 
             if (denominator == 0)
             {
-                throw new DivideByZeroException();
+                denominator = 1;
+                //throw new DivideByZeroException();
             }
 
             accumulation /= denominator;

@@ -111,6 +111,141 @@ new double[] {2.0, 4.0, 2.0 },
             a = new double[] { 0.6, 1.696, 1.16312 };
 
             Assert.IsTrue(r.SequenceEqual(a, e));
+
+
+            uDegree = 2;
+            vDegree = 3;
+            uKnot = KnotSet.CreateToUniform(uDegree, 3);
+            vKnot = KnotSet.CreateToUniform(vDegree, 5);
+            weights = new double[][]
+             {
+                    new double[]{ 1, 1, 1, 1, 1, },
+                    new double[]{ 1, 2, 2, 2, 1, },
+                    new double[]{ 1, 1, 1, 1, 1, },
+             };
+
+            ptGrid = new double[][][]
+             {
+                    new double[][]{
+new double[] {0.0, 0.0, 1.0 },
+new double[] {0.0, 1.0, 2.0 },
+new double[] {0.0, 2.0, 0.0 },
+new double[] {0.0, 3.0, 1.0 },
+new double[] {0.0, 4.0, 1.0 },
+                    },
+                    new double[][]{
+new double[] {1.0, 0.0, 2.0 },
+new double[] {1.0, 1.0, 2.0 },
+new double[] {1.0, 2.0, 1.0 },
+new double[] {1.0, 3.0, 1.0 },
+new double[] {1.0, 4.0, 1.0 },
+                    },
+                    new double[][]{
+new double[] {2.0, 0.0, 2.0 },
+new double[] {2.0, 1.0, 1.0 },
+new double[] {2.0, 2.0, 1.0 },
+new double[] {2.0, 3.0, 1.0 },
+new double[] {2.0, 4.0, 2.0 },
+                    },
+             };
+            u = 1;
+            v = 0;
+            e = 0.0001;
+            surface = new NURBSSurface(ptGrid, uKnot, vKnot, uDegree, vDegree, weights);
+            r = surface.ParameterAt(u, v);
+            a = new double[] { 2, 0, 2 };
+
+            Assert.IsTrue(r.SequenceEqual(a, e));
+
+
+            uDegree = 2;
+            vDegree = 3;
+            uKnot = KnotSet.CreateToUniform(uDegree, 3);
+            vKnot = KnotSet.CreateToUniform(vDegree, 5);
+            weights = new double[][]
+             {
+                    new double[]{ 1, 1, 1, 1, 1, },
+                    new double[]{ 1, 2, 2, 2, 1, },
+                    new double[]{ 1, 1, 1, 1, 1, },
+             };
+
+            ptGrid = new double[][][]
+             {
+                    new double[][]{
+new double[] {0.0, 0.0, 1.0 },
+new double[] {0.0, 1.0, 2.0 },
+new double[] {0.0, 2.0, 0.0 },
+new double[] {0.0, 3.0, 1.0 },
+new double[] {0.0, 4.0, 1.0 },
+                    },
+                    new double[][]{
+new double[] {1.0, 0.0, 2.0 },
+new double[] {1.0, 1.0, 2.0 },
+new double[] {1.0, 2.0, 1.0 },
+new double[] {1.0, 3.0, 1.0 },
+new double[] {1.0, 4.0, 1.0 },
+                    },
+                    new double[][]{
+new double[] {2.0, 0.0, 2.0 },
+new double[] {2.0, 1.0, 1.0 },
+new double[] {2.0, 2.0, 1.0 },
+new double[] {2.0, 3.0, 1.0 },
+new double[] {2.0, 4.0, 2.0 },
+                    },
+             };
+            u = 0;
+            v = 1;
+            e = 0.0001;
+            surface = new NURBSSurface(ptGrid, uKnot, vKnot, uDegree, vDegree, weights);
+            r = surface.ParameterAt(u, v);
+            a = new double[] { 0, 4, 1 };
+
+            Assert.IsTrue(r.SequenceEqual(a, e));
+
+
+            uDegree = 2;
+            vDegree = 3;
+            uKnot = KnotSet.CreateToUniform(uDegree, 3);
+            vKnot = KnotSet.CreateToUniform(vDegree, 5);
+            weights = new double[][]
+             {
+                    new double[]{ 1, 1, 1, 1, 1, },
+                    new double[]{ 1, 2, 2, 2, 1, },
+                    new double[]{ 1, 1, 1, 1, 1, },
+             };
+
+            ptGrid = new double[][][]
+             {
+                    new double[][]{
+new double[] {0.0, 0.0, 1.0 },
+new double[] {0.0, 1.0, 2.0 },
+new double[] {0.0, 2.0, 0.0 },
+new double[] {0.0, 3.0, 1.0 },
+new double[] {0.0, 4.0, 1.0 },
+                    },
+                    new double[][]{
+new double[] {1.0, 0.0, 2.0 },
+new double[] {1.0, 1.0, 2.0 },
+new double[] {1.0, 2.0, 1.0 },
+new double[] {1.0, 3.0, 1.0 },
+new double[] {1.0, 4.0, 1.0 },
+                    },
+                    new double[][]{
+new double[] {2.0, 0.0, 2.0 },
+new double[] {2.0, 1.0, 1.0 },
+new double[] {2.0, 2.0, 1.0 },
+new double[] {2.0, 3.0, 1.0 },
+new double[] {2.0, 4.0, 2.0 },
+                    },
+             };
+            u = 1;
+            v = 1;
+            e = 0.0001;
+            surface = new NURBSSurface(ptGrid, uKnot, vKnot, uDegree, vDegree, weights);
+            r = surface.ParameterAt(u, v);
+            a = new double[] { 2, 4, 2 };
+
+            Assert.IsTrue(r.SequenceEqual(a, e));
         }
     }
 }
