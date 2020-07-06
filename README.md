@@ -11,9 +11,9 @@ Spline C# Implementation
 - Bezier Curve 
 - Bezier Surface 
 - B-Spline
-- B-Spline Surface ( Not tested )
+- B-Spline Surface 
 - Nurbs Curve
-- Nurbs Surface ( Not tested )
+- Nurbs Surface 
 
 
 ## To be developed
