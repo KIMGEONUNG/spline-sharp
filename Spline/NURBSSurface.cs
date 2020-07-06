@@ -36,7 +36,7 @@ namespace Spline
         ///
         /// </summary>
         /// <param name="_pointsGrid"></param>
-        public NURBSSurface(IEnumerable<IEnumerable<IEnumerable<double>>> _pointsGrid, KnotSet knots, int degree, IEnumerable<IEnumerable<double>> _weights) 
+        public NURBSSurface(IEnumerable<IEnumerable<IEnumerable<double>>> _pointsGrid, KnotSet uKnotVector, KnotSet vKnotVector, int uDegree, int vDegree, IEnumerable<IEnumerable<double>> _weights) 
         {
             List<List<Point3d>> ptss = new List<List<Point3d>>();
             List<List<double>> wss = new List<List<double>>();
@@ -61,6 +61,11 @@ namespace Spline
             }
             this.pointsGrid = ptss.Select(n => n.ToArray()).ToArray();
             this.weights = wss.Select(n => n.ToArray()).ToArray();
+
+            this.uKnotVector = (KnotSet)uKnotVector.Clone();
+            this.vKnotVector = (KnotSet)vKnotVector.Clone();
+            this.uDegree = uDegree;
+            this.vDegree = vDegree;
         }
 
         public double[] ParameterAt(double u, double v)

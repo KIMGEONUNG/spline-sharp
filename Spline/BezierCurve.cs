@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using Spline.BasisInfos;
+﻿using Spline.BasisInfos;
 using Spline.Enums;
 using Spline.Interfaces;
 using Spline.Utils;

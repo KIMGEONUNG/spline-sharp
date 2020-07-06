@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{34777A3C-4388-4455-AAF8-242CA2404C8B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SplineFramework</RootNamespace>
+    <AssemblyName>SplineFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Spline\BasisInfos\BasisInfo.cs">
+      <Link>BasisInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BasisInfos\BezierBasisInfo.cs">
+      <Link>BezierBasisInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BasisInfos\BSplineBasisInfo.cs">
+      <Link>BSplineBasisInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BezierCurve.cs">
+      <Link>BezierCurve.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BezierSpline.cs">
+      <Link>BezierSpline.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BezierSurface.cs">
+      <Link>BezierSurface.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BSpline.cs">
+      <Link>BSpline.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BSplineCurve.cs">
+      <Link>BSplineCurve.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\BSplineSurface.cs">
+      <Link>BSplineSurface.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Enums\BezierAlgorithms.cs">
+      <Link>BezierAlgorithms.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Interfaces\ParametricSurface.cs">
+      <Link>ParametricSurface.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Interfaces\PrarametricCurve.cs">
+      <Link>PrarametricCurve.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\NURBSCurve.cs">
+      <Link>NURBSCurve.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\NURBSSurface.cs">
+      <Link>NURBSSurface.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\SplineBase.cs">
+      <Link>SplineBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Utils\CurveDivider.cs">
+      <Link>CurveDivider.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Utils\KnotSet.cs">
+      <Link>KnotSet.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Utils\MathTool.cs">
+      <Link>MathTool.cs</Link>
+    </Compile>
+    <Compile Include="..\Spline\Utils\SurfaceDivider.cs">
+      <Link>SurfaceDivider.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
